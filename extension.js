@@ -1,6 +1,6 @@
 const vscode = require("vscode");
 
-Date.prototype.format = function(format) {
+Date.prototype.format = function (format) {
     var o = {
         "M+": this.getMonth() + 1, //month
         "d+": this.getDate(), //day
@@ -21,13 +21,13 @@ Date.prototype.format = function(format) {
     return format;
 };
 
-function activate(context) {
+function activate (context) {
     console.log('Extension "js-file-header" is now active!');
 
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand("extension.addJsFileHeader", function() {
+    let disposable = vscode.commands.registerCommand("extension.addJsFileHeader", function () {
         // The code you place here will be executed every time your command is executed
         var config = vscode.workspace.getConfiguration("jsFileHeader");
         console.log(config);
@@ -38,7 +38,7 @@ function activate(context) {
             return; // No open text editor
         }
 
-        editor.edit(function(editBuilder) {
+        editor.edit(function (editBuilder) {
             try {
                 editBuilder.insert(new vscode.Position(0, 0), compileFileHeader(config));
             } catch (error) {
@@ -47,7 +47,7 @@ function activate(context) {
         });
     });
 
-    var compileFileHeader = function(config) {
+    var compileFileHeader = function (config) {
         var line = "/**\n";
 
         if (config.Copyright) {
@@ -62,10 +62,20 @@ function activate(context) {
             line += " *\n";
         }
 
-        line += " * long description for the file\n";
-        line += " *\n";
-        line += " * @summary short description for the file\n";
-        line += " * @author {author}\n".replace("{author}", config.Author);
+        if (config.Description) {
+            line += " * long description for the file\n";
+            line += " *\n";
+        }
+
+        // line += " * @summary short description for the file\n";
+
+        line += " * @file " + /* vscode.workspace.TextDocument.fileName + */ "\n";
+        line += " * @author {author}".replace("{author}", config.Author);
+
+        if (config.Email) {
+            line += " <{email}>".replace("{email}", config.Email);
+        }
+
         line += " *\n";
         line += " * Created at     : {time} \n".replace("{time}", new Date().format("yyyy-MM-dd hh:mm:ss"));
         line += " * Last modified  : {time} \n".replace("{time}", new Date().format("yyyy-MM-dd hh:mm:ss"));
@@ -73,8 +83,8 @@ function activate(context) {
         return line;
     };
 
-    var fileHeaderFormatter = function() {
-        setTimeout(function() {
+    var fileHeaderFormatter = function () {
+        setTimeout(function () {
             console.log("Invoke fileHeaderFormatter");
             try {
                 var editor = vscode.editor || vscode.window.activeTextEditor;
@@ -106,8 +116,8 @@ function activate(context) {
                 }
                 if (found && diff > 15 && lastModifiedRange != null) {
                     console.log("Replace last modified time");
-                    setTimeout(function() {
-                        editor.edit(function(edit) {
+                    setTimeout(function () {
+                        editor.edit(function (edit) {
                             edit.replace(lastModifiedRange, lastModifiedText);
                         });
                         document.save();
@@ -128,5 +138,5 @@ function activate(context) {
 exports.activate = activate;
 
 // this method is called when your extension is deactivated
-function deactivate() {}
+function deactivate () { }
 exports.deactivate = deactivate;

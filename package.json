@@ -1,9 +1,9 @@
 {
-    "name": "js-file-header",
-    "displayName": "JavaScript File Header",
-    "description": "JavaScript File Header for Documentation",
-    "version": "0.1.3",
-    "publisher": "arjunkomath",
+    "name": "dm-js-file-header",
+    "displayName": "DM's JavaScript File Header",
+    "description": "DM's JavaScript File Header for Documentation",
+    "version": "0.1.0",
+    "publisher": "dmxl",
     "galleryBanner": {
         "color": "#ffe04b",
         "theme": "light"
@@ -11,7 +11,7 @@
     "icon": "icon.jpg",
     "repository": {
         "type": "git",
-        "url": "https://github.com/arjunkomath/js-file-header-vscode"
+        "url": "https://github.com/DMXL/js-file-header-vscode"
     },
     "engines": {
         "vscode": "^1.17.0"
@@ -31,18 +31,28 @@
             "properties": {
                 "jsFileHeader.Author": {
                     "type": "string",
-                    "default": "Arjun Komath",
-                    "description": "Author name and email"
+                    "default": "DMXL",
+                    "description": "Author name"
                 },
                 "jsFileHeader.Copyright": {
                     "type": "string",
-                    "default": false,
+                    "default": "",
                     "description": "Copyright information"
                 },
                 "jsFileHeader.License": {
                     "type": "string",
-                    "default": false,
+                    "default": "",
                     "description": "License information"
+                },
+                "jsFileHeader.Email": {
+                    "type": "string",
+                    "default": "dm@dmon-studio.com",
+                    "description": "Author email"
+                },
+                "jsFileHeader.Description": {
+                    "type": "string",
+                    "default": "",
+                    "description": "File description"
                 }
             }
         },
