@@ -2,7 +2,7 @@
     "name": "dm-js-file-header",
     "displayName": "DM's JavaScript File Header",
     "description": "DM's JavaScript File Header for Documentation",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "publisher": "dmxl",
     "galleryBanner": {
         "color": "#ffe04b",
