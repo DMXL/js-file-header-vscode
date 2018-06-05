@@ -1,4 +1,5 @@
 const vscode = require("vscode");
+const path = require("path");
 
 Date.prototype.format = function (format) {
     var o = {
@@ -67,16 +68,14 @@ function activate (context) {
             line += " *\n";
         }
 
-        // line += " * @summary short description for the file\n";
-
-        line += " * @file " + /* vscode.workspace.TextDocument.fileName + */ "\n";
+        line += " * @file " + vscode.window.activeTextEditor.document.fileName.split(path.sep).pop() + "\n";
         line += " * @author {author}".replace("{author}", config.Author);
 
         if (config.Email) {
             line += " <{email}>".replace("{email}", config.Email);
         }
 
-        line += " *\n";
+        line += "\n *\n";
         line += " * Created at     : {time} \n".replace("{time}", new Date().format("yyyy-MM-dd hh:mm:ss"));
         line += " * Last modified  : {time} \n".replace("{time}", new Date().format("yyyy-MM-dd hh:mm:ss"));
         line += " */\n\n";
