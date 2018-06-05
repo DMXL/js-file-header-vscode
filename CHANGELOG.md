@@ -1,9 +1,7 @@
 # Change Log
 
-## [0.1.3]
-- Start extention on opening javascript files
-- Add icon and repo url
-- Update release notes
+## [0.1.4]
+- Added some more available options
 
-## [0.0.1]
+## [0.1.0]
 - Initial release

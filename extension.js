@@ -68,7 +68,10 @@ function activate (context) {
             line += " *\n";
         }
 
-        line += " * @file " + vscode.window.activeTextEditor.document.fileName.split(path.sep).pop() + "\n";
+        var activeEditor = vscode.window.editor || vscode.window.activeTextEditor;
+        var filename = activeEditor.document.fileName.split(path.sep).pop()
+
+        line += " * @file " + filename + "\n";
         line += " * @author {author}".replace("{author}", config.Author);
 
         if (config.Email) {
