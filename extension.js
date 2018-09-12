@@ -69,20 +69,37 @@ function activate (context) {
         }
 
         var activeEditor = vscode.window.editor || vscode.window.activeTextEditor;
-        var filename = activeEditor.document.fileName.split(path.sep).pop()
+        var filepath = activeEditor.document.fileName;
+        var folders = vscode.workspace.workspaceFolders;
+        var filename;
 
-        line += " * @file " + filename + "\n";
-        line += " * @author {author}".replace("{author}", config.Author);
+        if (folders.length == 1) {
+            filename = filepath.split(folders[0].uri.path)[1];
+        } else {
+            folders.find(function (folder) {
+                var bits = filepath.split(folder.uri.path);
+                var bingo = bits.length > 1;
 
-        if (config.Email) {
-            line += " <{email}>".replace("{email}", config.Email);
+                filename = bits[bingo ? 1 : 0];
+                return bingo;
+            });
         }
 
+        line += " * @file " + filename.slice(1) + "\n";
+        line += " * @desc (description of the file)\n";
+        line += " * @author {author}".replace("{author}", config.Author);
+        line += config.Email ? " <{email}>".replace("{email}", config.Email) : "";
+
         line += "\n *\n";
-        line += " * Created at     : {time} \n".replace("{time}", new Date().format("yyyy-MM-dd hh:mm:ss"));
-        line += " * Last modified  : {time} \n".replace("{time}", new Date().format("yyyy-MM-dd hh:mm:ss"));
+        line += " * Created at     : {time}\n".replace("{time}", new Date().format("yyyy-MM-dd hh:mm:ss"));
+        line += " * Last modified  : {time}\n".replace("{time}", new Date().format("yyyy-MM-dd hh:mm:ss"));
         line += " */\n\n";
+
         return line;
+    };
+
+    var getFileName = function () {
+
     };
 
     var fileHeaderFormatter = function () {
